@@ -8,8 +8,8 @@
         "ghcr.io/rails/devcontainer/features/activestorage": {},
         "ghcr.io/itsmechlark/features/redis-server:1": {}
     },
-    "postCreateCommand": "sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y libpq-dev libmariadb-dev libarchive13 libassimp-dev assimp-utils && export COREPACK_ENABLE_DOWNLOAD_PROMPT=0 && corepack enable && bundle install && yarn install",
-    "postStartCommand": "bash ./bin/dev",
+    "postCreateCommand": "sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y libpq-dev libmariadb-dev libarchive13 libassimp-dev assimp-utils && corepack enable && bundle install && yarn install",
+    "postStartCommand": "redis-server --daemonize yes",
     "customizations": {
         "vscode": {
             "extensions": [
@@ -19,10 +19,14 @@
             ]
         }
     },
+    "mounts": [
+        "source=${localWorkspaceFolder}/tmp/libraries,target=/libraries,type=bind,consistency=cached"
+    ],
     "containerEnv": {
         "SHELL": "/bin/bash",
         "RAILS_ENV": "development",
-        "NODE_ENV": "development"
+        "NODE_ENV": "development",
+        "COREPACK_ENABLE_DOWNLOAD_PROMPT": "0"
     },
     "forwardPorts": [
         3214
