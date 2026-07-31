@@ -20,6 +20,10 @@ class FileHandlers::Base
       0
     end
 
+    def icon
+      nil
+    end
+
     # For test mocking only
     def input_types
       self::INPUT_TYPES
@@ -54,8 +58,15 @@ class FileHandlers::Base
     end
     memo_wise :can_save?
 
-    def open_url_for(target_url, client_os: nil)
+    def open_url_for(file, client_os: nil)
       raise NotImplementedError
+    end
+
+    private
+
+    def signed_url_for(file)
+      signed_id = file.signed_id expires_in: 1.hour, purpose: "download"
+      Rails.application.routes.url_helpers.model_model_file_by_signed_filename_url(file.model, file.filename, sig: signed_id)
     end
   end
 end

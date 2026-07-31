@@ -47,7 +47,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :windows]
   gem "rspec-rails"
-  gem "standard", "~> 1.55"
+  gem "standard", "~> 1.56"
   gem "factory_bot"
   gem "faker", "~> 3.8"
   gem "guard", "~> 2.20"
@@ -63,15 +63,21 @@ group :development, :test do
   gem "rubocop-pundit", github: "manyfold3d/rubocop-pundit", require: false
   gem "rubyzip", "~> 2.4"
   gem "i18n-tasks", "~> 1.1"
-  gem "simplecov", "~> 0.22", require: false
+  gem "simplecov", "~> 1.0", require: false
   gem "simplecov-cobertura", require: false
-  gem "with_model", "~> 2.2"
+  gem "with_model", "~> 2.3"
   gem "vcr", "~> 6.4"
 
   # system tests and custom screenshots
   gem "capybara"
   gem "capybara-screenshot", github: "el-cms/capybara-screenshot", branch: "custom-prefixes"
   gem "selenium-webdriver"
+
+  # Documentation
+  gem "yard-activerecord", "~> 0.0.17"
+  gem "yard-activesupport-concern", "~> 0.0.1"
+  gem "yard-lint", "~> 1.10"
+  gem "rubocop-yard", "~> 1.3"
 end
 
 group :development do
@@ -103,7 +109,7 @@ gem "rails-settings-cached", "~> 2.9"
 
 gem "kaminari", "~> 1.2"
 
-gem "lograge", "~> 0.14"
+gem "lograge", "~> 0.15"
 
 gem "acts_as_favoritor", "~> 6.0"
 
@@ -133,6 +139,7 @@ gem "rolify", "~> 6.0"
 gem "letter_opener", "~> 1.10", group: :development
 
 gem "sidekiq", "~> 8.0"
+gem "gitlab-sidekiq-fetcher", require: "sidekiq-reliable-fetch", git: "https://github.com/DocSpring/sidekiq-reliable-fetch.git"
 
 # gem "sidekiq-failures", "~> 1.0"
 gem "activejob-status", "~> 1.0"
@@ -147,18 +154,18 @@ gem "logstash-event", "~> 1.2"
 gem "climate_control", "~> 1.2", group: :test
 
 gem "sys-filesystem", "~> 1.6"
-gem "shrine", "~> 3.7"
+gem "shrine", "~> 3.9"
 gem "tus-server", "~> 2.3"
 gem "shrine-tus", "~> 2.1"
 
-gem "aws-sdk-s3", "< 1.227"
+gem "aws-sdk-s3", "< 1.229"
 
 gem "better_content_security_policy", "~> 0.1"
 
 gem "devise_zxcvbn", "~> 6.0"
 
-gem "federails", git: "https://gitlab.com/experimentslabs/federails.git", branch: "main"
-gem "federails-moderation", "~> 0.4"
+gem "fedipub", git: "https://gitlab.com/fedipub/fedipub.git", branch: "main"
+gem "fedipub-moderation", git: "https://gitlab.com/fedipub/fedipub-moderation.git", branch: "main"
 gem "caber", github: "manyfold3d/caber"
 gem "fasp_client", "~> 0.6"
 
@@ -218,8 +225,6 @@ gem "csv", "~> 3.3"
 gem "arel_extensions", "~> 2.4"
 
 gem "assimp-ffi", git: "https://github.com/Kerilk/assimp-ruby.git"
-
-gem "yard-lint", "~> 1.8", group: :development
 
 gem "zaru", "~> 1.1"
 

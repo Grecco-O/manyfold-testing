@@ -1,7 +1,6 @@
 require:
   - standard
   - rubocop-pundit
-
 plugins:
   - rubocop-performance
   - rubocop-capybara
@@ -10,6 +9,7 @@ plugins:
   - rubocop-rspec_rails
   - rubocop-i18n
   - rubocop-factory_bot
+  - rubocop-yard
 
 inherit_gem:
   standard: config/base.yml
@@ -34,6 +34,7 @@ I18n/RailsI18n:
   Exclude:
     - "spec/**/*"
     - "app/lib/cli/**/*"
+    - "**/*.gemspec"
 Rails/Output:
   Exclude:
     - "app/lib/cli/**/*"

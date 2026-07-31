@@ -45,7 +45,7 @@ To run the app yourself, you'll need the following installed:
 
 * Ruby 3.4
 * Bundler 2.6+
-* Node.js 24.14.1 (and run `corepack enable`)
+* Node.js 24.17.0 (and run `corepack enable`)
 * Yarn 3.8+
 * Foreman or [another Procfile runner](https://github.com/ddollar/foreman#ports)
 * [libarchive](https://github.com/chef/ffi-libarchive#installation) (for upload support)
@@ -105,7 +105,7 @@ We use [Rubocop](https://rubocop.org/) to monitor adherence to coding standards 
 
 You can run the linter with `bundle exec rubocop`.
 
-We also have linters for ERB and Typescript files. You can run these with: `bundle exec erb_lint --lint-all` and `yarn run lint:ts` respectively.
+We also have linters for ERB and Typescript files. You can run these with: `bundle exec erb_lint --lint-all` and `yarn run lint` respectively.
 
 Code linting is automatically performed by our GitHub Actions test runners, but if you set up [Husky](https://typicode.github.io/husky/get-started.html), it will also execute as a pre-commit hook.
 

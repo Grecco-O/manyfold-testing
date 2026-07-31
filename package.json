@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint:ts": "ts-standard --fix",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "typecheck": "bundle exec i18n export --config=./config/i18n-js.yml && tsc --project tsconfig.json"
   },
   "dependencies": {
@@ -19,17 +20,17 @@
     "@uppy/locales": "^5.1.1",
     "@uppy/tus": "^5.1.1",
     "@uppy/utils": "^7.2.0",
-    "altcha": "^3.1.0",
+    "altcha": "^3.2.1",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "bootswatch": "^5.3.8",
     "comlink": "^4.4.2",
-    "driver.js": "^1.4.0",
+    "driver.js": "^1.8.0",
     "i18n-js": "^4.5.3",
     "masonry-layout": "^4.2.2",
-    "three": "^0.184.0",
-    "threejs-webworker-3mf-loader": "https://github.com/manyfold3d/threejs-webworker-3mf-loader",
-    "tom-select": "^2.6.1"
+    "three": "^0.185.1",
+    "threejs-webworker-3mf-loader": "https://github.com/manyfold3d/threejs-webworker-3mf-loader.git#commit=d65e59e7e3955912efcd96576382ee736a62a36f",
+    "tom-select": "^2.6.2"
   },
   "version": "0.1.0",
   "devDependencies": {
@@ -38,19 +39,20 @@
     "@types/jquery": "^4.0.1",
     "@types/lodash": "^4.17.24",
     "@types/node": "~24.13",
-    "@types/three": "^0.184.1",
+    "@types/three": "^0.185.1",
     "@types/webpack-env": "^1.18.8",
     "@types/webxr": "^0.5.24",
-    "@typescript-eslint/parser": "^8.61.1",
+    "eslint": "^9.0.0",
     "husky": "^9.1.7",
+    "neostandard": "^0.13.0",
+    "postcss": "^8.5.25",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^16.1.1",
-    "postcss-preset-env": "^11.3.1",
-    "rollup": "^4.62.0",
+    "postcss-preset-env": "^11.3.2",
+    "rollup": "^4.62.3",
     "sass-embedded": "^1.100.0",
-    "ts-standard": "^12.0.2",
     "typescript": "~5.9.3",
-    "vite": "^8.0.0",
+    "vite": "^8.1.5",
     "vite-plugin-rails": "^0.6.0",
     "vite-plugin-ruby": "^5.2.0",
     "vite-plugin-wasm": "^3.6.0"
@@ -60,6 +62,6 @@
     "defaults"
   ],
   "volta": {
-    "node": "24.14.1"
+    "node": "24.17.0"
   }
 }

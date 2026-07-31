@@ -285,8 +285,14 @@ RSpec.describe Library do
   end
 
   context "with multiple libraries" do
-    let!(:first_library) { create(:library) }
-    let!(:second_library) { create(:library) }
+    let(:first_library) { create(:library) }
+    let(:second_library) { create(:library) }
+
+    before do
+      # Ensure correct order of creation
+      first_library
+      second_library
+    end
 
     it "uses first library as default if not explicitly set" do
       expect(described_class.default).to eq first_library
@@ -320,6 +326,48 @@ RSpec.describe Library do
       first_library.destroy
       second_library.destroy
       expect(SiteSettings.default_library).to be_nil
+    end
+  end
+
+  context "with a library on S3 storage" do
+    let(:library) {
+      create(
+        :library,
+        storage_service: "s3",
+        s3_bucket: "test",
+        s3_region: "eu",
+        s3_access_key_id: "test",
+        s3_secret_access_key: "abc123",
+        s3_endpoint: "http://example.com"
+      )
+    }
+
+    before do
+      allow(library).to receive_message_chain(:storage, :bucket, :objects).and_return([ # rubocop:todo RSpec/MessageChain
+        OpenStruct.new(key: "model/test.png"),
+        OpenStruct.new(key: "model/.manyfold/derivatives/test.png/carousel.png"),
+        OpenStruct.new(key: "model/nope.nope")
+      ])
+    end
+
+    it "mocks object list correctly" do
+      expect(library.storage.bucket.objects.map(&:key)).to include "model/test.png"
+    end
+
+    it "lists available files in storage using simple matcher" do
+      expect(library.list_files("**/*.*")).to include "model/test.png", "model/nope.nope"
+    end
+
+    it "lists available files in storage using full matcher" do
+      expect(library.indexable_files).to include "model/test.png"
+    end
+
+    it "doesn't match unwanted files in storage using full matcher" do
+      expect(library.indexable_files).not_to include "model/nope.nope"
+    end
+
+    it "ignores manyfold-specific hidden files" do
+      expect(library.indexable_files).not_to include "model/.manyfold/derivatives/test.png/carousel.png"
     end
   end
 end

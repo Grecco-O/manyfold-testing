@@ -1,6 +1,6 @@
 require "sidekiq/web"
 require "sidekiq/cron/web"
-require "federails"
+require "fedipub"
 
 Rails.application.routes.draw do
   draw(:auth)
@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   draw(:upload)
   draw(:print)
   draw(:api)
+  draw(:plugins)
 
   resources :libraries, except: [:index] do
     collection do

@@ -4,6 +4,11 @@
 <% elsif policy(:user).index? %>
   <%= PageTitle title: t(".moderation_settings_title") %>
 <% end %>
+<% if Rails.cache.read("restart_required") %>
+  <div class="alert alert-danger">
+    <%= t(".restart_required") %>
+  </div>
+<% end %>
 <div class="row mt-2 flex-nowrap">
   <div class="col col-auto border-end" id="sidebar">
     <ul class="nav flex-column">
@@ -25,6 +30,9 @@
         </li>
         <li class="nav-item">
           <%= link_to t("settings.multiuser.heading"), multiuser_settings_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to t("views.plugins.index.title"), settings_plugins_path, class: "nav-link" %>
         </li>
       <% end %>
     </ul>

@@ -2,7 +2,7 @@
   <%= tag.meta property: "og:type", content: "website" %>
   <%= tag.meta property: "og:image", content: model_model_file_url(@model, @model.preview_file, format: @model.preview_file.extension) if @model.preview_file&.is_image? && !@model.sensitive %>
   <%= tag.meta name: "description", content: truncate(sanitize(@model.notes), length: 80) if @model.notes.present? %>
-  <%= tag.meta name: "fediverse:creator", content: @model.creator.federails_actor.at_address if @model.creator %>
+  <%= tag.meta name: "fediverse:creator", content: @model.creator.fedipub_actor.at_address if @model.creator %>
   <%= tag.link rel: "alternate", type: Mime[:oembed], href: model_url(@model, format: :oembed), title: @model.name %>
   <%- if @model.entrypoint %>
     <%= tag.link rel: "alternate", as: "spatial-entrypoint", type: @model.entrypoint.mime_type, href: model_model_file_raw_url(@model, @model.entrypoint.filename, anchor: @model.entrypoint_fragment) %>
@@ -10,12 +10,12 @@
 <% end %>
 
 <div itemscope itemtype="https://schema.org/3DModel">
-  <%= turbo_stream_from @model %>
 
   <%= PageTitle title: @model.name, heading: false, breadcrumbs: {
         Model.model_name.human(count: 100) => models_path
       } %>
   <div class="row row-cols-md-2 mt-2">
+    <%= turbo_stream_from @model %>
     <div class="col-md-9" id="item_list">
 
       <h1>
@@ -110,10 +110,10 @@
               <div>⁂</div>
               <div>
                 <% if @model.remote? %>
-                  <small><%= link_to @model.federails_actor.at_address, @model.federails_actor.profile_url, target: "new" %></small>
+                  <small><%= link_to @model.fedipub_actor.at_address, @model.fedipub_actor.profile_url, target: "new" %></small>
                 <% else %>
                   <small>
-                    <%= CopyableText(text: @model.federails_actor.at_address, label: t("general.copy_fediverse_handle")) %>
+                    <%= CopyableText(text: @model.fedipub_actor.at_address, label: t("general.copy_fediverse_handle")) %>
                   </small>
                 <% end %>
               </div>
@@ -139,6 +139,11 @@
           <%= DropdownDivider() %>
           <%= DropdownItem(icon: "pencil", label: t(".files_card.bulk_edit"), path: bulk_edit_model_model_files_path(@model)) if policy(@model).edit? %>
           <%= DropdownItem(icon: "radar", label: t(".rescan"), path: scan_model_path(@model), method: :post) if policy(@model).scan? %>
+          <% PluginManager.components_for(:model_menu).each do %>
+            <li role="presentation">
+              <%= render it.new(model: @model) %>
+            </li>
+          <% end %>
           <%= DropdownDivider() %>
           <%= DropdownItem(icon: "flag", label: translate("general.report", type: ""), path: new_model_report_path(@model)) if SiteSettings.multiuser_enabled? %>
         <% end %>

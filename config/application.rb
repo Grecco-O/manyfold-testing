@@ -20,10 +20,18 @@ require "rack/contrib"
 # you've limited to :test, :development, or :production.
 Bundler.require(:sqlite3, :postgres, :mysql, *Rails.groups)
 
+# Manually pull in the plugin manager for early initialization
+require "./lib/plugin_manager"
+
 module Manyfold
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
+
+    config.before_configuration do
+      PluginManager.load!
+      PluginManager.require!
+    end
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

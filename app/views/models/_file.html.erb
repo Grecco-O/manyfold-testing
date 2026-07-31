@@ -1,4 +1,5 @@
 <div class="col mb-4">
+  <%= turbo_stream_from file %>
   <div class="card preview-card <%= (file === @model.preview_file) ? "border-primary" : "" %>">
     <%= PreviewFrame(object: file) %>
     <div class="card-body">
@@ -13,7 +14,7 @@
           <code><%= sanitize file.filename %></code>
           <%- alts = file.alternative_formats %>
           <% if alts.any? %> +
-            <%= safe_join(alts.map(&:extension).map { content_tag(:code) { it.upcase } }, ", ") %>
+            <%= safe_join(alts.filter_map(&:extension).uniq.map { |extension| content_tag(:code) { extension.upcase } }, ", ") %>
           <% end %>
         </small>
       </div>

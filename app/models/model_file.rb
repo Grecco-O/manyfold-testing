@@ -52,28 +52,27 @@ class ModelFile < ApplicationRecord
   ]
 
   def extension
-    if has_attribute? :attachment_data
-      attachment&.extension
-    else
-      # DEPRECATED: for Pre-shrine migration
-      File.extname(filename).delete(".").downcase
-    end
+    attachment&.try(:extension) || File.extname(filename).delete(".").downcase
   end
 
   def is_image?
-    SupportedMimeTypes.image_extensions.include? extension
+    MediaType.image_extensions.include? extension
   end
 
   def is_video?
-    SupportedMimeTypes.video_extensions.include? extension
+    MediaType.video_extensions.include? extension
   end
 
   def is_document?
-    SupportedMimeTypes.document_extensions.include? extension
+    MediaType.document_extensions.include? extension
   end
 
   def is_3d_model?
-    SupportedMimeTypes.model_extensions.include? extension
+    MediaType.model_extensions.include? extension
+  end
+
+  def is_archive?
+    MediaType.archive_extensions.include? extension
   end
 
   def has_render?
