@@ -97,6 +97,10 @@ To simplify the development environment setup, Manyfold includes a devcontainer 
 
 4. Once the container is running, you can use the integrated terminal in Visual Studio Code to run commands as usual.
 
+> [!NOTE]
+> It can happen that Ruby terminates with an error because some gems are allegedly missing. That not true (mostly)! Ruby LSP starts parallel with our Devcontainer and tries to build it's own composed bundle, that fails because our setup.sh is still running and is installing stuff. Just wait until that is finished and then reload the window.
+> F1 -> Developer: Reload Window
+
 ### Coding standards
 
 [![Codacy Quality](https://img.shields.io/codacy/grade/0d309b8b38b5431c9195e62cd7b707f3)](https://app.codacy.com/gh/manyfold3d/manyfold/dashboard)
